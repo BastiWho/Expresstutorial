@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  form(action=`/catalog/bookinstance/${bookinstance._id}/update` method="POST")
+    p
+      strong Status:
+      input(type="text" name="status" value=bookinstance.status)
+    p
+      strong Datum, an dem das Buch verfügbar ist:
+      input(type="date" name="due_back" value=bookinstance.due_back ? bookinstance.due_back.toISOString().slice(0, 10) : '')
+    input(type="hidden" name="bookinstanceid" value=bookinstance._id)
+    button(type="submit") Aktualisieren

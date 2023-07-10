@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h1=title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='book') Buch:
+      select#book.form-control(type='select' placeholder='Buch auswählen' name='book' required='true')
+        - book_list.sort(function(a, b) {let textA = a.title.toUpperCase(); let textB = b.title.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        for book in book_list
+          option(value=book._id, selected=(selected_book==book._id.toString() ? 'selected' : false) ) #{book.title}
+
+    div.form-group
+      label(for='imprint') Impressum:
+      input#imprint.form-control(type='text' placeholder='Angaben zum Herausgeber und Datum' name='imprint' required='true' value=(undefined===bookinstance ? '' : bookinstance.imprint))
+    div.form-group
+      label(for='due_back') Datum, an dem das Buch verfügbar ist:
+      input#due_back.form-control(type='date' name='due_back' value=(undefined===bookinstance ? '' : bookinstance.due_back_yyyy_mm_dd))
+
+    div.form-group
+      label(for='status') Status:
+      select#status.form-control(type='select' placeholder='Status auswählen' name='status' required='true' )
+        option(value='Maintenance' selected=(undefined===bookinstance || bookinstance.status!='Maintenance' ? false:'selected')) Pflege
+        option(value='Available' selected=(undefined===bookinstance || bookinstance.status!='Available' ? false:'selected')) Verfügbar
+        option(value='Loaned' selected=(undefined===bookinstance || bookinstance.status!='Loaned' ? false:'selected')) Ausgeliehen
+        option(value='Reserved' selected=(undefined===bookinstance || bookinstance.status!='Reserved' ? false:'selected')) Reserviert
+
+    button.btn.btn-primary(type='submit') Absenden
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

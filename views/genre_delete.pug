@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  form(action=`/catalog/genre/${genre._id}/delete` method="POST")
+    p Möchten Sie dieses Genre wirklich löschen?
+    p
+      strong Name:
+      | #{genre.name}
+    p
+      strong Beschreibung:
+      | #{genre.description}
+    input(type="hidden" name="genreid" value=genre._id)
+    button(type="submit") Löschen

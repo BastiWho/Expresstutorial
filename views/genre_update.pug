@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  form(action=`/catalog/genre/${genre._id}/update` method="POST")
+    p
+      strong Name:
+      input(type="text" name="name" value=genre.name)
+    p
+      strong Beschreibung:
+      textarea(name="description" rows="4" cols="50")= genre.description
+    input(type="hidden" name="genreid" value=genre._id)
+    button(type="submit") Update

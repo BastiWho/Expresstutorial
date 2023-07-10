@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  form(action=`/catalog/bookinstance/${bookinstance._id}/delete` method="POST")
+    p Sind Sie sich sicher, dass Sie dieses Buchexemplar löschen möchten?
+    p
+      strong Titel:
+      | #{bookinstance.book.title}
+    p
+      strong Impressum:
+      | #{bookinstance.imprint}
+    p
+      strong Rückgabe:
+      | #{bookinstance.due_back ? bookinstance.due_back.toLocaleDateString() : ''}
+    input(type="hidden" name="bookinstanceid" value=bookinstance._id)
+    button(type="submit") Löschen

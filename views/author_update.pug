@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+  form(action=`/catalog/author/${author._id}/update` method="POST")
+    p
+      strong Vorname:
+      input(type="text" name="first_name" value=author.first_name)
+    p
+      strong Nachname:
+      input(type="text" name="last_name" value=author.last_name)
+    p
+      strong Geburtstag:
+      input(type="date" name="date_of_birth" value=author.date_of_birth ? author.date_of_birth.toISOString().slice(0, 10) : '')
+    p
+      strong Todestag:
+      input(type="date" name="date_of_death" value=author.date_of_death ? author.date_of_death.toISOString().slice(0, 10) : '')
+    input(type="hidden" name="authorid" value=author._id)
+    button(type="submit") Aktualisieren
